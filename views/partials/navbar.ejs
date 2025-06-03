@@ -17,19 +17,19 @@
             <a class="nav-link" href="/admin">Admin panel</a>
           </li>
           <li class="nav-item d-flex align-items-center">
-            <form action="/auth/logout" method="POST" style="display:inline; margin-bottom:0;">
-              <button type="submit" class="nav-link btn btn-outline-danger btn-sm">Logg ut 🔒</button>
+                <form action="/logout" method="POST" style="display:inline; margin-bottom:0;">
+              <button type="submit" class="nav-link btn btn-outline-danger btn-sm px-3" style="padding:0.25rem 1rem; margin-left: 0.5rem;">Logg ut 🔒</button>
             </form>
           </li>
         <% } else if (session && session.isLoggedIn) { %>
           <li class="nav-item d-flex align-items-center">
-            <form action="/auth/logout" method="POST" style="display:inline; margin-bottom:0;">
-              <button type="submit" class="nav-link btn btn-outline-danger btn-sm">Logg ut 🔒</button>
+            <form action="/logout" method="POST" style="display:inline; margin-bottom:0;">
+              <button type="submit" class="nav-link btn btn-outline-danger btn-sm px-3" style="padding:0.25rem 1rem; margin-left: 0.5rem;">Logg ut 🔒</button>
             </form>
           </li>
         <% } else { %>
           <li class="nav-item">
-            <a class="nav-link" href="/auth/login">Logg inn</a>
+            <a class="nav-link" href="/login">Logg inn</a>
           </li>
         <% } %>
       </ul>
