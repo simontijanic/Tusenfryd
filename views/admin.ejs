@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adminpanel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container mt-4">
+        <h1>Adminpanel</h1>
+        <a href="/admin/attractions/new" class="btn btn-success mb-3">Ny attraksjon</a>
+        <h3>Attraksjoner</h3>
+        <ul class="list-group mb-4">
+            <% attractions.forEach(function(attraction) { %>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong><%= attraction.name %></strong> <br>
+                        <span><%= attraction.description %></span><br>
+                        Åpningstid: <%= attraction.openingTime %> - <%= attraction.closingTime %> <br>
+                        Ventetid: <%= attraction.waitTime %> min
+                        <% if (!attraction.isOpen) { %>
+                            <span class="badge bg-danger ms-2">Stengt</span>
+                        <% } %>
+                    </div>
+                    <div>
+                        <a href="/admin/attractions/edit/<%= attraction._id %>" class="btn btn-warning btn-sm">Rediger</a>
+                        <form method="POST" action="/admin/attractions/delete/<%= attraction._id %>" style="display:inline-block">
+                            <button class="btn btn-danger btn-sm">Slett</button>
+                        </form>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+        <h3>Reservasjoner</h3>
+        <ul class="list-group">
+            <% reservations.forEach(function(reservation) { %>
+                <li class="list-group-item">
+                    <%= reservation.visitorName %> - <%= reservation.attractionName %> - <%= reservation.time %>
+                </li>
+            <% }) %>
+        </ul>
+        <h3>Intern varsling</h3>
+        <form method="POST" action="/admin/alert" class="mb-3">
+            <div class="input-group">
+                <input type="text" name="message" class="form-control" placeholder="Varsel til ansatte (f.eks. attraksjon nede)" required>
+                <button class="btn btn-danger" type="submit">Send varsel</button>
+            </div>
+        </form>
+        <ul class="list-group mb-4">
+            <% if (adminMessages && adminMessages.length > 0) { %>
+                <% adminMessages.forEach(function(msg) { %>
+                    <li class="list-group-item">
+                        <strong><%= msg.sender %>:</strong> <%= msg.message %> <span class="text-muted small">[<%= msg.createdAt.toLocaleString('no-NO') %>]</span>
+                    </li>
+                <% }) %>
+            <% } else { %>
+                <li class="list-group-item text-muted">Ingen varsler.</li>
+            <% } %>
+        </ul>
+        <h3>Intern chat (ansatte)</h3>
+        <form method="POST" action="/admin/chat" class="mb-3">
+            <div class="input-group">
+                <input type="text" name="message" class="form-control" placeholder="Skriv en melding til ansatte..." required>
+                <button class="btn btn-primary" type="submit">Send</button>
+            </div>
+        </form>
+        <div class="border rounded p-2 mb-4" style="max-height:200px; overflow-y:auto; background:#f8f9fa;">
+            <% if (chatMessages && chatMessages.length > 0) { %>
+                <% chatMessages.forEach(function(msg) { %>
+                    <div><strong><%= msg.sender %>:</strong> <%= msg.message %> <span class="text-muted small">[<%= msg.createdAt.toLocaleString('no-NO') %>]</span></div>
+                <% }) %>
+            <% } else { %>
+                <div class="text-muted">Ingen meldinger.</div>
+            <% } %>
+        </div>
+    </div>
+    <%- include('partials/footer') %>
+</body>
+</html>
