@@ -206,3 +206,21 @@ Under utviklingen av Tusenfryd-applikasjonen har følgende feilsøkingsstrategie
 
 Alle krav er løst med tydelig separasjon mellom backend (API, datamodeller, autentisering) og frontend (EJS-visninger, Bootstrap for design). Systemet er utvidbart og lett å feilsøke videre.
 
+---
+
+## Nettverksoppsett og sikkerhet
+
+For å dokumentere oppsett av brannmur og nettverksgrensesnitt på vår virtuelle maskin (for eksempel med VMware vSphere), er det lagt ved skjermbilder fra systemet:
+
+### UFW-status (Uncomplicated Firewall)
+
+Dette bildet viser at UFW-brannmuren er aktivert og hvilke porter som er åpne:
+
+![UFW status](images/ufw-status.png)
+
+### IP-adresse (ip a)
+
+Dette bildet viser nettverksgrensesnitt og IP-adresse på den virtuelle maskinen:
+
+![IP-adresse med ip a](images/ip-a.png)
+
