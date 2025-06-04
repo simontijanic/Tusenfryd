@@ -6,6 +6,7 @@
 - [API-endepunkter](#api-endepunkter)
 - [Struktur](#struktur)
 - [Eksempel på API-respons](#eksempel-på-api-respons)
+- [Kort rapport](#kort-rapport)
 
 ---
 
@@ -168,7 +169,40 @@ Tusenfryd/
 
 ---
 
-## Feilhåndtering
-- Alle feil logges til konsoll og vises som flash-meldinger i frontend.
-- 404-sider og generelle feil har egne visninger.
+# Kort rapport
+
+## Feilsøkingsstrategier og refleksjoner
+
+Under utviklingen av Tusenfryd-applikasjonen har følgende feilsøkingsstrategier vært sentrale:
+
+- **Konsoll- og serverlogging:** Ved feil i backend har vi brukt `console.error` og feilmeldinger i terminalen for å identifisere hvor i koden feilen oppstår. Egen feilhåndterings-middleware (`middleware/errorHandler.js` og `middleware/notFoundHandler.js`) sørger for at brukeren får tydelige feilmeldinger, samtidig som detaljer logges for utvikler.
+- **Flash-meldinger:** Systemet bruker flash-meldinger for å vise brukervennlige feilmeldinger i frontend, slik at brukeren får tilbakemelding uten å se tekniske detaljer.
+- **Testing i flere steg:** Nye funksjoner er testet først med Postman (for API-endepunkter) og deretter i nettleser for å sikre at både API og brukergrensesnitt fungerer som forventet.
+- **Datavalidering:** Det er lagt inn validering av input, for eksempel tidspunkter i formatet HH:MM, for å unngå feil i databasen.
+- **Refleksjon:** En viktig lærdom har vært å holde backend og frontend tydelig adskilt, og å bruke modeller og ruter konsekvent. Det har også vært nyttig å bruke EJS-partials for å gjenbruke kode i visningene.
+
+## Funksjonelle krav og hvordan de er løst
+
+**1. Se og søke etter attraksjoner**
+- Løst med en egen side (`/attractions`) som viser alle attraksjoner fra databasen. Søkefeltet filtrerer attraksjoner basert på navn.
+
+**2. Reservasjonssystem med kølogikk**
+- Brukere kan reservere plass i kø for en attraksjon. Systemet sjekker kapasitet og om brukeren allerede står i kø. Reservasjoner lagres i en egen modell (`Reservation`).
+
+**3. Adminpanel for CRUD på attraksjoner**
+- Administratorer har tilgang til et adminpanel hvor de kan opprette, redigere og slette attraksjoner. Endringer oppdateres direkte i databasen.
+
+**4. Endre åpningstider, ventetid og status**
+- Admin kan endre åpningstid, ventetid og status (åpen/stengt) for hver attraksjon via adminpanelet.
+
+**5. System for varsling når attraksjoner er stengt**
+- Når en attraksjon er stengt, vises dette tydelig med badge og flash-melding til brukerne.
+
+**6. (Bonus) Intern chat for ansatte**
+- Det er implementert et enkelt chat- og varslingssystem for ansatte/admin i adminpanelet.
+
+**7. Bildevisning for attraksjoner**
+- Hver attraksjon kan vise et bilde, som hentes fra `public/images`-mappen. Bildet vises både i liste og på detaljside.
+
+Alle krav er løst med tydelig separasjon mellom backend (API, datamodeller, autentisering) og frontend (EJS-visninger, Bootstrap for design). Systemet er utvidbart og lett å feilsøke videre.
 
