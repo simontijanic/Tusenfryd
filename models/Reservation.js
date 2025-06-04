@@ -7,7 +7,6 @@ const reservationSchema = new mongoose.Schema({
     required: true
   },
   user: {
-    // Assuming you'll have a User model later. For now, storing a simple identifier.
     type: String, 
     required: true
   },
@@ -15,7 +14,6 @@ const reservationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  // You might want to add more fields like estimated queue time, notification status, etc.
 });
 
 const Reservation = mongoose.model('Reservation', reservationSchema);

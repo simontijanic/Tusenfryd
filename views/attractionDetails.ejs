@@ -12,7 +12,13 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card shadow">
-                    <div class="card-body">
+                    <div class="card-body text-center">
+                        <img 
+                            src="/images/<%= attraction.image || 'default.jpg' %>" 
+                            alt="<%= attraction.name %>" 
+                            class="mb-4 shadow-lg rounded" 
+                            style="width:100%; max-width:600px; height:350px; object-fit:cover; border-radius: 1rem; border: 4px solid #eee;"
+                        >
                         <h2 class="card-title mb-3"><%= attraction.name %></h2>
                         <h6 class="card-subtitle mb-2 text-muted">Åpningstid: <%= attraction.openingTime %> - <%= attraction.closingTime %></h6>
                         <p class="mb-1"><strong>Ventetid:</strong> <%= attraction.waitTime %> min</p>

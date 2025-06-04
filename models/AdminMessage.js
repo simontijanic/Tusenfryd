@@ -1,9 +1,8 @@
-// models/AdminMessage.js
 const mongoose = require('mongoose');
 
 const adminMessageSchema = new mongoose.Schema({
   sender: {
-    type: String, // username
+    type: String, 
     required: true
   },
   message: {

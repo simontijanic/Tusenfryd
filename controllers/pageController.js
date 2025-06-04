@@ -1,14 +1,11 @@
-// controllers/pageController.js
 const Attraction = require('../models/Attraction');
 const Reservation = require('../models/Reservation');
 const AdminMessage = require('../models/AdminMessage');
 
-// Home page redirect to attractions
 exports.redirectHome = (req, res) => {
   res.redirect('/attractions');
 };
 
-// List attractions for visitors
 exports.listAttractions = async (req, res) => {
   try {
     const search = req.query.search || '';
@@ -29,7 +26,6 @@ exports.listAttractions = async (req, res) => {
   }
 };
 
-// Reservation endpoint (only for logged-in users)
 exports.reserveAttraction = async (req, res) => {
   if (!req.session || !req.session.isLoggedIn) {
     return res.redirect('/login');
@@ -37,21 +33,19 @@ exports.reserveAttraction = async (req, res) => {
   try {
     const attraction = await Attraction.findById(req.params.id);
     if (!attraction) return res.status(404).send('Attraksjon ikke funnet');
-    // Check if user is already in queue
+
     if (attraction.queue && attraction.queue.includes(req.session.username)) {
-      // Already in queue
       return res.redirect('/attractions');
     }
-    // Check if queue is full
+
     if (attraction.queue && attraction.queue.length >= attraction.queueCapacity) {
-      // Queue is full
       return res.status(400).send('Køen er full for denne attraksjonen.');
     }
-    // Add user to queue
+
     attraction.queue = attraction.queue || [];
     attraction.queue.push(req.session.username);
     await attraction.save();
-    // Also create a reservation record for admin panel
+
     const reservation = new Reservation({
       attraction: attraction._id,
       user: req.session.username
@@ -63,14 +57,13 @@ exports.reserveAttraction = async (req, res) => {
   }
 };
 
-// Admin panel (requires authentication, simplified)
 exports.adminPanel = async (req, res) => {
   try {
     const attractions = await Attraction.find();
     const reservations = await Reservation.find().populate('attraction');
     const adminMessages = await AdminMessage.find({ type: 'alert' }).sort({ createdAt: -1 }).limit(10);
     const chatMessages = await AdminMessage.find({ type: 'chat' }).sort({ createdAt: 1 }).limit(50);
-    // Map reservations for display
+
     const reservationList = reservations.map(r => ({
       visitorName: r.user,
       attractionName: r.attraction ? r.attraction.name : 'Ukjent',
@@ -88,7 +81,6 @@ exports.adminPanel = async (req, res) => {
   }
 };
 
-// Post an alert (admin only)
 exports.postAlert = async (req, res) => {
   if (!req.session || !req.session.isAdmin) return res.status(403).send('Kun admin kan sende varsler');
   const { message, attractionId } = req.body;
@@ -97,7 +89,6 @@ exports.postAlert = async (req, res) => {
   res.redirect('/admin');
 };
 
-// Post a chat message (admin only, bonus)
 exports.postChat = async (req, res) => {
   if (!req.session || !req.session.isAdmin) return res.status(403).send('Kun admin kan chatte');
   const { message } = req.body;
@@ -106,12 +97,10 @@ exports.postChat = async (req, res) => {
   res.redirect('/admin');
 };
 
-// New attraction form
 exports.newAttractionForm = (req, res) => {
   res.render('newAttraction', { session: req.session });
 };
 
-// Edit attraction form
 exports.editAttractionForm = async (req, res) => {
   try {
     const attraction = await Attraction.findById(req.params.id);
@@ -122,7 +111,6 @@ exports.editAttractionForm = async (req, res) => {
   }
 };
 
-// Vis detaljer for én attraksjon
 exports.attractionDetails = async (req, res) => {
   try {
     const attraction = await Attraction.findById(req.params.id);
@@ -139,12 +127,10 @@ exports.attractionDetails = async (req, res) => {
   }
 };
 
-// Login page
 exports.getLogin = (req, res) => {
   res.render('login', { error: null, session: req.session });
 };
 
-// FAQ page
 exports.getFaq = (req, res) => {
   res.render('faq', { session: req.session });
 };
@@ -154,7 +140,6 @@ function isValidTime(time) {
   return /^([01]\d|2[0-3]):([0-5]\d)$/.test(time);
 }
 
-// Handle new attraction POST
 exports.newAttractionSubmit = async (req, res) => {
   const { name, description, openingTime, closingTime, waitTime, isOpen } = req.body;
   if (!isValidTime(openingTime) || !isValidTime(closingTime)) {
@@ -175,7 +160,6 @@ exports.newAttractionSubmit = async (req, res) => {
   }
 };
 
-// Handle edit attraction POST
 exports.editAttractionSubmit = async (req, res) => {
   const { name, description, openingTime, closingTime, waitTime, isOpen } = req.body;
   if (!isValidTime(openingTime) || !isValidTime(closingTime)) {
@@ -196,7 +180,6 @@ exports.editAttractionSubmit = async (req, res) => {
   }
 };
 
-// Handle delete attraction POST
 exports.deleteAttraction = async (req, res) => {
   try {
     await Attraction.findByIdAndDelete(req.params.id);

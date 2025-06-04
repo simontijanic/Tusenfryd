@@ -24,6 +24,7 @@
             <% attractions.forEach(function(attraction) { %>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
+                        <img src="/images/<%= attraction.image || 'default.jpg' %>" alt="<%= attraction.name %>" style="width:100px; height:auto; object-fit:cover; margin-right:1rem;">
                         <strong><a href="/attractions/<%= attraction._id %>"><%= attraction.name %></a></strong> <br>
                         <span><%= attraction.description %></span><br>
                         Åpningstid: <%= attraction.openingTime %> - <%= attraction.closingTime %> <br>

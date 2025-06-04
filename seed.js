@@ -1,4 +1,3 @@
-// seed.js
 require('dotenv').config();
 const mongoose = require('mongoose');
 const Attraction = require('./models/Attraction');

@@ -1,7 +1,5 @@
-// handlers/attractionHandler.js
 const Attraction = require('../models/Attraction');
 
-// Get all attractions
 exports.getAllAttractions = async (req, res) => {
     try {
         const attractions = await Attraction.find();
@@ -11,7 +9,6 @@ exports.getAllAttractions = async (req, res) => {
     }
 };
 
-// Get a single attraction by ID
 exports.getAttractionById = async (req, res) => {
     try {
         const attraction = await Attraction.findById(req.params.id);
@@ -24,7 +21,6 @@ exports.getAttractionById = async (req, res) => {
     }
 };
 
-// Create a new attraction
 exports.createAttraction = async (req, res) => {
     try {
         const newAttraction = new Attraction(req.body);
@@ -36,7 +32,6 @@ exports.createAttraction = async (req, res) => {
     }
 };
 
-// Update an attraction
 exports.updateAttraction = async (req, res) => {
     try {
         const updatedAttraction = await Attraction.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
@@ -49,7 +44,6 @@ exports.updateAttraction = async (req, res) => {
     }
 };
 
-// Delete an attraction
 exports.deleteAttraction = async (req, res) => {
     try {
         const deletedAttraction = await Attraction.findByIdAndDelete(req.params.id);

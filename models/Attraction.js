@@ -11,15 +11,15 @@ const attractionSchema = new mongoose.Schema({
     required: true
   },
   openingTime: {
-    type: String, // Consider using Date type for more complex time operations
+    type: String,
     required: true
   },
   closingTime: {
-    type: String, // Consider using Date type for more complex time operations
+    type: String,
     required: true
   },
   waitTime: {
-    type: Number, // in minutes
+    type: Number,
     default: 0
   },
   isOpen: {
@@ -28,12 +28,15 @@ const attractionSchema = new mongoose.Schema({
   },
   queueCapacity: {
     type: Number,
-    default: 20 // default max queue size
+    default: 20 
   },
   queue: [{
-    type: String // username
-  }]
-  // You might want to add more fields later, like image, capacity, etc.
+    type: String
+  }],
+  image: {
+    type: String,
+    default: 'placeholder.jpg'
+  }
 });
 
 const Attraction = mongoose.model('Attraction', attractionSchema);
