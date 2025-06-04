@@ -210,17 +210,21 @@ Alle krav er løst med tydelig separasjon mellom backend (API, datamodeller, aut
 
 ## Nettverksoppsett og sikkerhet
 
-For å dokumentere oppsett av brannmur og nettverksgrensesnitt på vår virtuelle maskin (for eksempel med VMware vSphere), er det lagt ved skjermbilder fra systemet:
-
 ### UFW-status (Uncomplicated Firewall)
 
-Dette bildet viser at UFW-brannmuren er aktivert og hvilke porter som er åpne:
 
-![UFW status](images/ufw-status.png)
+![UFW status](images/UFW Status.png)
 
 ### IP-adresse (ip a)
 
+
+![IP-adresse med ip a](images/IPA.png)
+
+### VSPhere
+
 Dette bildet viser nettverksgrensesnitt og IP-adresse på den virtuelle maskinen:
 
-![IP-adresse med ip a](images/ip-a.png)
+![IP-adresse med ip a](images/VSPhere.png)
+
+
 
