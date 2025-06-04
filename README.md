@@ -213,18 +213,18 @@ Alle krav er løst med tydelig separasjon mellom backend (API, datamodeller, aut
 ### UFW-status (Uncomplicated Firewall)
 
 
-![UFW status](images/UFW Status.png)
+![UFW status](./public/images/UFW.png)
 
 ### IP-adresse (ip a)
 
 
-![IP-adresse med ip a](images/IPA.png)
+![IP-adresse med ip a](./public/images/IPA.png)
 
 ### VSPhere
 
 Dette bildet viser nettverksgrensesnitt og IP-adresse på den virtuelle maskinen:
 
-![IP-adresse med ip a](images/VSPhere.png)
+![IP-adresse med ip a](./public/images/VSPhere.png)
 
 
 
